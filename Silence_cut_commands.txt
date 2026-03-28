@@ -1,0 +1,14 @@
+# Step 1: Normalize the Variable Frame Rate (VFR) QuickTime video to a steady 30 FPS
+ffmpeg -i Untitled.mov -r 30 -c:v libx264 -c:a aac clean_video.mp4
+
+# Step 2: Automatically cut out silent parts (below 4% volume) with a 0.1s margin
+auto-editor clean_video.mp4 --edit audio:threshold=4% --margin 0.1sec
+
+
+#Whisper for SUbs
+pip install -U whisper-ctranslate2
+
+whisper-ctranslate2 your_video.mp4 --model small --output_format srt
+
+Nepali
+whisper-ctranslate2 your_video.mp4 --language ne --task translate --model large-v3 --output_format srt
